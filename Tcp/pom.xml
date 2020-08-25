@@ -11,5 +11,10 @@
 
     <artifactId>tutorial-01</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>io.projectreactor.netty</groupId>
+            <artifactId>reactor-netty</artifactId>
+        </dependency>
+    </dependencies>
 </project>
