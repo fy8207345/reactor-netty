@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('污染源清单')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" class="table table-hover">
+                <thead>
+                <tr>
+                    <td>分厂/工序</td>
+                    <td>无组织排放源名称</td>
+                    <td>物料名称</td>
+                    <td>TSP</td>
+                    <td>生产设备名称</td>
+                    <td>状态</td>
+                    <td>治理设备名称</td>
+                    <td>状态</td>
+                </tr>
+                </thead>
+                <tbody>
+                #foreach($i in $list)
+                <tr>
+                    <td>$i.wname</td>
+                    <td>$i.sname</td>
+                    <td>$i.mname</td>
+                    <td>TSP</td>
+                    <td>生产设备名称</td>
+                    <td>状态</td>
+                    <td>$i.dname</td>
+                    <td>状态</td>
+                </tr>
+                #end
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+
+</body>
+</html>
