@@ -6,24 +6,34 @@ import cn.hutool.extra.template.Template;
 import cn.hutool.extra.template.TemplateConfig;
 import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
+import com.fy.poi.model.Pollute;
+import sun.nio.ch.IOUtil;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class VelocityUtil {
 
     public static void main(String[] args) throws IOException {
         TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig("templates", TemplateConfig.ResourceMode.CLASSPATH));
-        Template template = engine.getTemplate("template.html");
-        String result = template.render(Dict.create().set("list", Reader.read()));
-        System.out.println(result);
-
+        Template htmlTemplate = engine.getTemplate("template.html");
+        List<Pollute> source = Reader.read();
+        Dict param = Dict.create().set("list", source);
+        String result = htmlTemplate.render(param);
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(result.getBytes());
-        FileOutputStream fileOutputStream = new FileOutputStream(new File("C:\\Users\\Administrator\\Desktop\\output.html"));
-        IoUtil.copy(byteArrayInputStream, fileOutputStream);
+        FileOutputStream htmlOutputStream = new FileOutputStream(new File("C:\\Users\\Administrator\\Desktop\\output_html.html"));
+        IoUtil.copy(byteArrayInputStream, htmlOutputStream);
+
+        Template sqlTemplate = engine.getTemplate("template.sql");
+        result = sqlTemplate.render(param);
+        byteArrayInputStream = new ByteArrayInputStream(result.getBytes());
+        FileOutputStream sqlOutputStream = new FileOutputStream(new File("C:\\Users\\Administrator\\Desktop\\output_sql.sql"));
+        IoUtil.copy(byteArrayInputStream, sqlOutputStream);
+        sqlOutputStream.flush();
+        sqlOutputStream.close();
+        htmlOutputStream.flush();
+        htmlOutputStream.close();
+
         byteArrayInputStream.close();
-        fileOutputStream.flush();
-        fileOutputStream.close();
     }
 }

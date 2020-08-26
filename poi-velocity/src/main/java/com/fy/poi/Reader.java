@@ -7,6 +7,7 @@ import com.fy.poi.model.Pollute;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Reader {
 
@@ -17,7 +18,7 @@ public class Reader {
     public static List<Pollute> read(){
         ExcelReader excelReader = new ExcelReader("飞翔清单无组织清单2020-8-10.xls", 0);
         Map<String, String> header = new HashMap<String, String>();
-        header.put("序号", "index");
+        header.put("序号", "id");
         header.put("分厂/工序", "wname");
         header.put("无组织排放源名称", "sname");
         header.put("物料名称", "mname");
@@ -30,6 +31,10 @@ public class Reader {
         header.put("监测设备建议", "jiance");
         excelReader.setHeaderAlias(header);
         List<Pollute> pollutes = excelReader.read(1, 2, Pollute.class);
+        Random random = new Random();
+        for(Pollute pollute : pollutes){
+            pollute.setTsp(random.nextDouble() * 100);
+        }
         return pollutes;
     }
 }
